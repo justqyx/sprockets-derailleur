@@ -114,7 +114,8 @@ module Sprockets
                 else
                   logger.info "Writing #{target}"
                   asset.write_to target
-                  asset.write_to "#{target}.gz" unless skip_gzip?(asset)
+                  # No need for nginx or cdn
+                  # asset.write_to "#{target}.gz" unless skip_gzip?(asset)
                 end
 
                 Marshal.dump(data, child_write)
@@ -145,16 +146,16 @@ module Sprockets
       end
     end
 
-    def sprockets2?
-      Sprockets::VERSION.start_with?('2')
-    end
+    # def sprockets2?
+    #  Sprockets::VERSION.start_with?('2')
+    # end
 
-    def skip_gzip?(asset)
-      if sprockets2?
-        asset.is_a?(BundledAsset)
-      else
-        environment.skip_gzip?
-      end
-    end
+    # def skip_gzip?(asset)
+    #   if sprockets2?
+    #     asset.is_a?(BundledAsset)
+    #   else
+    #     environment.skip_gzip?
+    #   end
+    # end
   end
 end
